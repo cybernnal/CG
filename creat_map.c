@@ -35,7 +35,6 @@ static void    init_map(t_env *env)
     setl = TOP;
     setl |= LEFT;
     i = 0;
-    ft_putnbr(setl);
     x = env->size / 2;
     y = 0;
     set = NUL_SET;

@@ -41,11 +41,11 @@ static void     put_in(int x, int y, unsigned int pos, t_env *env)
     else if (pos == RIGHT)
         x++;
     pos = ret_not_pos(pos);
-    if (pos == 0 || env->map[y][x] == UN_SET ||
-        env->map[y][x] & P_ONE_SET || env->map[y][x] & P_TWO_SET || env->map[y][x] & pos)
+    if (pos == 0 || env->map[y][x] == UN_SET || //useless
+        env->map[y][x] & P_ONE_SET || env->map[y][x] & P_TWO_SET || env->map[y][x] & pos)//useless
     {
-        ft_putendl("you lose a round :p");
-        return ;
+        ft_putendl("you lose a round :p");//too
+        return ;//too
     }
     env->map[y][x] |= pos;
     if (env->map[y][x] & SET)

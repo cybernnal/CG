@@ -29,24 +29,83 @@ static Uint32   get_rainbow_color( int i)
 	return ( ( Uint32 )( ( r << 16) + ( g << 8) + b));
 }
 
-static void		draw_map(int size, t_window *w)
+static Uint32 	get_top_color(t_env *env, int x, int y)
+{
+	printf("x: %d, y: %d\n", x, y);
+	if (env->map[y][x] & UN_SET)
+		return (WHITE);
+	else if (env->map[y][x] & TOP || env->map[y][x] & BOT || env->map[y][x] & LEFT || env->map[y][x] & RIGHT)
+		return (RED);
+	else if (env->map[y][x] & P_ONE_SET)
+		return (GREEN);
+	else if (env->map[y][x] & P_TWO_SET)
+		return (BLEU);
+	else
+		return (0);
+}
+/*
+
+static Uint32 	get_bot_color(t_env *env, int x, int y)
+{
+
+}
+
+static Uint32 	get_l_color(t_env *env, int x, int y)
+{
+
+}
+*/
+
+static Uint32 	get_r_color(t_env *env, int x, int y)
+{
+
+}
+
+static void		draw_map(t_env *env, t_window *w)
 {
 	int x;
+	int xmar;
 	int y;
+	int x1;
+	int y1;
 	int len;
 
-	len = (WIN_HEIGHT - 40) / size;
-	x = (WIN_WIDTH / 2) - len / 2;
-	y = (WIN_HEIGHT / 2) - ((size / 2) * len);
-	//ft_putnbr(y);
-	while (len--)
+	x1 = 0;
+	y1 = 0;
+	len = (WIN_HEIGHT - MAR * 2) / env->size;
+	y = MAR;
+	xmar = ((WIN_WIDTH - MAR * 2) % len);
+	if (xmar < MAR)
+		xmar += len;
+	x = xmar;
+	while (y <= WIN_HEIGHT - MAR)
 	{
-		draw_pixel(x, y, (Uint32) ((255 << 16) + (0 << 8) + 0), w);
-		x++;
+		while (x <= WIN_WIDTH - xmar)
+		{
+			if (x1 < env->size && y1 < env->size && ((y - MAR) % len == 0 || y == MAR || y == WIN_HEIGHT - MAR))
+				draw_pixel(x, y, get_top_color(env, x1, y1), w);
+			else if (x1 < env->size && y1 < env->size)
+				draw_pixel(x, y, get_r_color(env, x1, y1), w);
+			else
+				draw_pixel(x, y, WHITE, w);
+			if ((y - MAR) % len == 0 || y == MAR || y == WIN_HEIGHT - MAR)
+				x++;
+			else
+			{
+				x += len;
+				x1++;
+			}
+		}
+		//draw_pixel(WIN_WIDTH - xmar, y, WHITE, w);
+		y++;
+		if ((y - MAR) % len == 0 && y - MAR != 0)
+			y1++;
+		x = xmar;
+		x1 = 0;
 	}
 }
 
-void        render(int size)
+void        render(t_env *env)
 {
 	static t_window w;
 
@@ -56,7 +115,7 @@ void        render(int size)
 		w.is_init = 1;
 	}
 	bzero(w.img_ptr, sizeof(Uint32) * WIN_HEIGHT * WIN_WIDTH);
-	draw_map(size, &w);
+	draw_map(env, &w);
 	while (SDL_PollEvent(&w.event))
 		key_handler(w.event);
 	SDL_UpdateTexture(w.image, NULL, w.img_ptr, WIN_WIDTH * sizeof(Uint32));

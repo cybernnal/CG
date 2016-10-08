@@ -2,11 +2,12 @@
 # define CG_H
 
 //#include <sdl2.h>
-//#include "SDL2/SDL.h"
+#include "SDL2/SDL.h"
 #include "libft.h"
 
-#define WIN_WIDTH   1000
-#define WIN_HEIGHT  500
+#define WIN_WIDTH   1200
+#define WIN_HEIGHT  700
+#define MAR         20
 
 #define USAGE "Usage: |x;y;p| x: x position, y: y position, p: 1 = bot ; 2 = top ; 3 = left ; 4 = right"
 
@@ -21,8 +22,10 @@
 #define P_TWO_SET 0x00000080
 #define SET       TOP & BOT & LEFT & RIGHT
 
-
-/*
+#define WHITE   (Uint32) ((255 << 16) + (255 << 8) + 255)
+#define RED     (Uint32) ((255 << 16) + (0 << 8) + 0)
+#define GREEN   (Uint32) ((0 << 16) + (255 << 8) + 0)
+#define BLEU    (Uint32) ((0 << 16) + (0 << 8) + 255)
 
 typedef struct      s_window
 { 
@@ -35,7 +38,7 @@ typedef struct      s_window
 	int             step_x;
 	int             step_y;
 }                   t_window;
-*/
+
 
 typedef struct      s_pars
 {
@@ -53,9 +56,8 @@ typedef struct      s_env
     int             p2;
 }                   t_env;
 
-//void	render(int size);
-//void	init_window(t_window *window);
-//void	build_map(int size);
+void	render(t_env *env);
+void	init_window(t_window *window);
 int     creat_map(t_env *env);
 void    ft_error(char *str);
 void    set_point(t_env *env, int x, int y);

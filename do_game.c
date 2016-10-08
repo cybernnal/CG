@@ -66,6 +66,7 @@ int     do_game(t_env * env)
     while (env->p1 + env->p2 < ((env->size + 1) * (env->size / 2) + 1))
     {
         print_map(env->map, env->size);
+        render(env);
         ft_putstr("player ");
         env->p == 1 ? ft_putnbr(1) : ft_putnbr(2);
         ft_putstr(", please enter your move. ");
