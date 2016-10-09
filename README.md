@@ -9,19 +9,19 @@ litle game
 
 ===========================
 
-TODO fix graphique + check all game
+### important / priority:
 
-TODO graphique ++
+#### TODO fix linux / (mac?) error not responding when waiting input
 
-TODO add mouse
+#### TODO fix graphique + check all game
 
-TODO add bot player
+##### TODO add mouse
 
-TODO add more option, color, player...
+###### TODO graphique ++
 
-TODO add makefile
+###### TODO add bot player
 
-TODO fix linux / (mac?) error not responding when waiting input
+###### TODO add more option, color, player...
 
 TODO clean code
 
@@ -30,3 +30,5 @@ TODO opti code
 TODO leaks
 
 TODO have fun
+
+TODO add at exit funct()
