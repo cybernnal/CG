@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.6)
 project(colleen_game)
+enable_language(C)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ")
 
 set(SOURCE_FILES
     libft/ft_atoi.c
@@ -71,9 +72,16 @@ set(SOURCE_FILES
     libft/get_next_line.h
     libft/libft.h
     cg.h
-    main.c creat_map.c error.c do_round.c set_point.c do_game.c print_map.c put_masque.c)
+    main.c creat_map.c error.c do_round.c set_point.c do_game.c print_map.c put_masque.c render.c init_win.c)
 
 add_executable(colleen_game ${SOURCE_FILES})
 
 include_directories(.)
 include_directories(libft)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${colleen_game_SOURCE_DIR}/cmake")
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIR})
+target_link_libraries(colleen_game ${SDL2_LIBRARY} -lm)
+
+
