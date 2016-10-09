@@ -21,8 +21,6 @@ TODO add more option, color, player...
 
 TODO add makefile
 
-TODO add cmake/clion linux/mac compatible
-
 TODO fix linux / (mac?) error not responding when waiting input
 
 TODO clean code
