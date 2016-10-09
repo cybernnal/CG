@@ -1,6 +1,12 @@
 # CG
 litle game
 
+## if you whant to fix some thinks creat a new branch for push !!!!
+### for that:
+#### git checkout -b "name of branch"
+#### git add / commit
+#### git push -u origin "name of branch"
+
 TODO fix graphique + check all game
 
 TODO graphique ++
