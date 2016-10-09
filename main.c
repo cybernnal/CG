@@ -10,8 +10,6 @@ int	main(int argc, char **argv)
 	ft_bzero(&env, sizeof(t_env));
     env.size = ft_atoi(argv[1]);
 	creat_map(&env);
-    while (1)
-        render(&env);
     do_game(&env);
     print_map(env.map, env.size);
     render(&env);

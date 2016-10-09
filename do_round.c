@@ -30,7 +30,7 @@ static unsigned int     ret_not_pos(int p)
 static void     put_in(int x, int y, unsigned int pos, t_env *env)
 {
     env->map[y][x] |= pos;
-    if (env->map[y][x] & SET)
+    if (env->map[y][x] & TOP && env->map[y][x] & BOT && env->map[y][x] & LEFT && env->map[y][x] & RIGHT)
         set_point(env, x, y);
     if (pos == BOT)
         y++;
@@ -48,7 +48,7 @@ static void     put_in(int x, int y, unsigned int pos, t_env *env)
         return ;//too
     }
     env->map[y][x] |= pos;
-    if (env->map[y][x] & SET)
+    if (env->map[y][x] & TOP && env->map[y][x] & BOT && env->map[y][x] & LEFT && env->map[y][x] & RIGHT)
         set_point(env, x, y);
 }
 

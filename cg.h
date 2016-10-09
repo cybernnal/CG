@@ -9,7 +9,7 @@
 #define WIN_HEIGHT  700
 #define MAR         20
 
-#define USAGE "Usage: |x;y;p| x: x position, y: y position, p: 1 = bot ; 2 = top ; 3 = left ; 4 = right"
+#define USAGE "Usage: |x;y;p| x: x position, y: y position, p: 1 = bot ; 2 = top ; 3 = left ; 4 = right || 'quit' for exit game"
 
 #define UN_SET    0x00000000
 #define NUL_SET   0x00000001
@@ -20,12 +20,28 @@
 #define RIGHT     0x00000020
 #define P_ONE_SET 0x00000040
 #define P_TWO_SET 0x00000080
-#define SET       TOP & BOT & LEFT & RIGHT
+#define P_SET(x)  (x & P_TWO_SET || x & P_ONE_SET) ? 1 : 0
+#define SET       0 | TOP | BOT | LEFT | RIGHT
+
 
 #define WHITE   (Uint32) ((255 << 16) + (255 << 8) + 255)
 #define RED     (Uint32) ((255 << 16) + (0 << 8) + 0)
 #define GREEN   (Uint32) ((0 << 16) + (255 << 8) + 0)
 #define BLEU    (Uint32) ((0 << 16) + (0 << 8) + 255)
+
+typedef struct      s_trace
+{
+    int len;
+    int x;
+    int y;
+    int x1;
+    int y1;
+    int x0;
+    int y0;
+    int marx;
+    int mary;
+    int ll;
+}                   t_trace;
 
 typedef struct      s_window
 { 
@@ -49,6 +65,7 @@ typedef struct      s_pars
 
 typedef struct      s_env
 {
+    int             ret;
     int             size;
     int             **map;
     int             p;
@@ -64,5 +81,6 @@ void    set_point(t_env *env, int x, int y);
 int    do_round(int x, int y, int p, t_env *env);
 int     do_game(t_env * env);
 void        print_map(int **map, int size);
+void     put_masque(int x, int y, unsigned int pos, t_env *env);
 
 #endif

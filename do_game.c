@@ -51,11 +51,23 @@ static void  pars_n_play(t_env *env)
         ft_bzero(buf, 128);
         ft_bzero(&pars, sizeof(t_pars));
         read(1, buf, 127);
+        if (!ft_strcmp(buf, "quit\n"))
+            exit (0);
         if (ft_strlen(buf) >= 126)
             ft_error("Game Over, input fatal error: EXIT");
         if ((ft_pars(buf, &pars)) == 0)
+        {
             ft_putendl("input error, try again");
+            continue;
+        }
         is_good = do_round(pars.x, pars.y, pars.pos, env);
+        if (env->ret == 1)
+        {
+            print_map(env->map, env->size);
+            ft_putendl("gg you earn a point, please replay");
+            is_good = 0;
+            env->ret = 0;
+        }
     }
 }
 
@@ -65,11 +77,11 @@ int     do_game(t_env * env)
     env->p = 1;
     while (env->p1 + env->p2 < ((env->size + 1) * (env->size / 2) + 1))
     {
-        print_map(env->map, env->size);
         render(env);
+        print_map(env->map, env->size);
         ft_putstr("player ");
         env->p == 1 ? ft_putnbr(1) : ft_putnbr(2);
-        ft_putstr(", please enter your move. ");
+        ft_putendl(", please enter your move. ");
         pars_n_play(env);
         env->p *= -1;
     }

@@ -29,6 +29,84 @@ static Uint32   get_rainbow_color( int i)
 	return ( ( Uint32 )( ( r << 16) + ( g << 8) + b));
 }
 
+static void     init_var(t_trace *var, t_env *env)
+{
+    if (!var->len)
+    {
+        var->len = (WIN_HEIGHT - MAR * 2) / env->size;
+        var->marx = (WIN_WIDTH - (var->len * env->size)) / 2;
+        var->mary = (WIN_HEIGHT - (var->len * env->size)) / 2;
+    }
+    var->x = var->marx;
+    var->y = var->mary;
+    var->x1 = 0;
+    var->y1 = 0;
+    var->ll = 0;
+    var->x0 = var->x;
+    var->y0 = var->y;
+}
+
+static Uint32   get_color(t_env *env, t_trace *var)
+{
+    if (env->map[var->y1][var->x1] & P_ONE_SET)
+        return (GREEN);
+    else if (env->map[var->y1][var->x1] & P_TWO_SET)
+        return (BLEU);
+    else if (var->y == WIN_HEIGHT - var->mary || var->ll == 1)
+        return (WHITE);
+    else if ((var->y - var->mary) % var->len == 0 || var->y == var->mary || var->y == WIN_HEIGHT - var->mary)
+    {
+        if (env->map[var->y1][var->x1] & TOP)
+            return (RED);
+        else
+            return (WHITE);
+    }
+    else
+    {
+        if (env->map[var->y1][var->x1] & LEFT)
+            return (RED);
+        else
+            return (WHITE);
+    }
+
+}
+
+static void     draw_it(t_env *env, t_window *w)
+{
+    static t_trace     var;
+
+    init_var(&var, env);
+    while (var.y <= WIN_HEIGHT - var.mary)
+    {
+        while (var.x <= WIN_WIDTH - var.marx)
+        {
+            draw_pixel(var.x, var.y, get_color(env, &var), w);
+            if ((var.y - var.mary) % var.len == 0 || var.y == var.mary || var.y == WIN_HEIGHT - var.mary || P_SET(env->map[var.y1][var.x1]))
+            {
+                var.x++;
+                if ((var.x - var.marx) % var.len == 0 && var.x1 != 8)
+                    var.x1++;
+            }
+            else
+            {
+                var.x += var.len;
+                var.x1++;
+            }
+        }
+        var.x1 = 0;
+        var.y++;
+        if ((var.y - var.mary) % var.len == 0)
+        {
+            if (var.y1 != 8)
+                var.y1++;
+            else if (var.ll == 1)
+                return;
+            else
+                var.ll = 1;
+        }
+        var.x = var.marx;
+    }
+}
 
 static void		draw_map(t_env *env, t_window *w)
 {
@@ -38,7 +116,7 @@ static void		draw_map(t_env *env, t_window *w)
 	int len;
 
 	len = (WIN_HEIGHT - MAR * 2) / env->size;
-	y = MAR;
+    y = MAR;
 	xmar = ((WIN_WIDTH - MAR * 2) % len);
 	if (xmar < MAR)
 		xmar += len;
@@ -47,13 +125,14 @@ static void		draw_map(t_env *env, t_window *w)
 	{
 		while (x <= WIN_WIDTH - xmar)
 		{
+            if ((y - MAR) % len == 0 && (x - MAR) / len )
 			draw_pixel(x, y, BLEU, w);
 			if ((y - MAR) % len == 0 || y == MAR || y == WIN_HEIGHT - MAR)
 				x++;
 			else
 				x += len;
 		}
-		draw_pixel(WIN_WIDTH - xmar, y, BLEU, w);
+		draw_pixel(WIN_WIDTH - xmar, y, BLEU, w);//resolv probleme to remove dat
 		y++;
 		x = xmar;
 	}
@@ -69,7 +148,7 @@ void        render(t_env *env)
 		w.is_init = 1;
 	}
 	bzero(w.img_ptr, sizeof(Uint32) * WIN_HEIGHT * WIN_WIDTH);
-	draw_map(env, &w);
+	draw_it(env, &w);
 	while (SDL_PollEvent(&w.event))
 		key_handler(w.event);
 	SDL_UpdateTexture(w.image, NULL, w.img_ptr, WIN_WIDTH * sizeof(Uint32));

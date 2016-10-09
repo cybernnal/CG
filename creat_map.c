@@ -22,50 +22,50 @@ static int 	mal_map(t_env *env)
 
 static void    init_map(t_env *env)
 {
-    int     set;
-    int     setr;
-    int     setl;
     int     x;
     int     x1;
     int     y;
     int     i;
 
-    setr = TOP;
-    setr |= RIGHT;
-    setl = TOP;
-    setl |= LEFT;
     i = 0;
     x = env->size / 2;
     y = 0;
-    set = NUL_SET;
     while (y < env->size / 2)
     {
         x1 = x;
-        env->map[y][x++] = setl;
+        put_masque(x, y, TOP, env);
+        put_masque(x, y, LEFT, env);
+        if (y != 0)
+            x++;
         while ((x - x1) + 1 <= y + i)
         {
-            env->map[y][x] = set;
-        //    printf("x: %d, y: %d, case: %d\n", x, y, env->map[y][x]);
+            put_masque(x, y, NUL_SET, env);
             x++;
         }
-        env->map[y][x] |= setr;
+        put_masque(x, y, TOP, env);
+        put_masque(x, y, RIGHT, env);
         i++;
         y++;
         x = x1 - 1;
     }
-    setr = 0 | BOT | RIGHT;
-    setl = 0 | BOT | LEFT;
+    put_masque(x, y, TOP, env);
     while (y < env->size)
     {
         x1 = x;
-        env->map[y][x++] = setl;
+        if (y != env->size - 1)
+            put_masque(x, y, BOT, env);
+        put_masque(x, y, LEFT, env);
+        if (y != env->size - 1)
+            x++;
         while ((x - x1 + 1) <= y + i)
         {
-            env->map[y][x] = set;
-    //        printf("x: %d, y: %d, case: %d\n", x, y, env->map[y][x]);
+            put_masque(x, y, NUL_SET, env);
             x++;
         }
-        env->map[y][x] |= setr;
+        put_masque(x, y, BOT, env);
+        put_masque(x, y, RIGHT, env);
+        if (y == env->size / 2)
+            put_masque(x, y, TOP, env);
         i -= 3;
         y++;
         x = x1 + 1;

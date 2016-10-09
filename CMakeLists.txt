@@ -71,7 +71,7 @@ set(SOURCE_FILES
     libft/get_next_line.h
     libft/libft.h
     cg.h
-    main.c creat_map.c error.c do_round.c set_point.c do_game.c print_map.c render.c init_win.c)
+    main.c creat_map.c error.c do_round.c set_point.c do_game.c print_map.c put_masque.c)
 
 add_executable(colleen_game ${SOURCE_FILES})
 
