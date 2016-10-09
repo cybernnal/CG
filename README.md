@@ -7,6 +7,8 @@ litle game
 #### git add / commit
 #### git push -u origin "name of branch"
 
+===========================
+
 TODO fix graphique + check all game
 
 TODO graphique ++
