@@ -66,8 +66,6 @@ static void     draw_map(t_env *env, t_window *w)
         {
             while ((var.x + 1 - var.marx) % var.len != 0)
             {
-             //   if (var.x1 == 0 && var.y1 == 8) //case non afficher enlever com pour debug
-               //     printf("\n\n\nblanc: %d  color: %d\n\n\n",WHITE, get_color(env, &var));//je comprend pas ca affiche pas la case en bas a gauche
                 draw_pixel(var.x, var.y, get_top_color(env, &var), w);
                 var.x++;
             }
@@ -82,7 +80,6 @@ static void     draw_map(t_env *env, t_window *w)
             var.x1++;
             var.x = var.marx + var.x1 * var.len;
             var.y = var.mary + var.y1 * var.len;
-            printf("y1: %d\n", var.y1);
         }
         var.x1 = 0;
         var.y1++;
