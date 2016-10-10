@@ -31,25 +31,13 @@ static void     init_var(t_trace *var, t_env *env)
     var->ll = 0;
 }
 
-static Uint32   get_top_color(t_env *env, t_trace *var) // clean useless if()
+static Uint32   get_gen_color(t_env *env, t_trace *var, unsigned int pos)
 {
-   if (env->map[var->y1][var->x1] & P_ONE_SET || (var->y1 > 0 && env->map[var->y1 - 1][var->x1] & P_ONE_SET))
+    if (env->map[var->y1][var->x1] & P_ONE_SET || (var->y1 > 0 && env->map[var->y1 - 1][var->x1] & P_ONE_SET))
         return (GREEN);
     else if (env->map[var->y1][var->x1] & P_TWO_SET || (var->y1 > 0 && env->map[var->y1 - 1][var->x1] & P_TWO_SET))
         return (BLEU);
-    else if (env->map[var->y1][var->x1] & TOP)
-        return (RED);
-    else
-        return (WHITE);
-}
-
-static Uint32   get_left_color(t_env *env, t_trace *var) // clean useless if()
-{
-    if (env->map[var->y1][var->x1] & P_ONE_SET || (var->x1 > 0 && env->map[var->y1][var->x1 - 1] & P_ONE_SET))
-        return (GREEN);
-    else if (env->map[var->y1][var->x1] & P_TWO_SET || (var->x1 > 0 && env->map[var->y1][var->x1 - 1] & P_TWO_SET))
-        return (BLEU);
-    else if (env->map[var->y1][var->x1] & LEFT)
+    else if (env->map[var->y1][var->x1] & pos)
         return (RED);
     else
         return (WHITE);
@@ -96,17 +84,22 @@ static void     draw_map(t_env *env, t_window *w)
             {
                 while ((var.x + 1 - var.marx) % var.len != 0)
                 {
-                    draw_pixel(var.x, var.y, get_top_color(env, &var), w);
+                    if (var.y1 == env->size - 1)
+                        draw_pixel(var.x, var.y + var.len, get_gen_color(env, &var, BOT), w);
+                    draw_pixel(var.x, var.y, get_gen_color(env, &var,TOP), w);
                     var.x++;
                 }
-                draw_pixel(var.x, var.y, get_top_color(env, &var), w);
+                draw_pixel(var.x, var.y, get_gen_color(env, &var, TOP), w);
                 var.x = var.marx + var.x1 * var.len;
                 while ((var.y + 1 - var.mary) % var.len != 0)
                 {
-                    draw_pixel(var.x, var.y, get_left_color(env, &var), w);
+                    if (var.x1 == env->size - 1)
+                        draw_pixel(var.x + var.len, var.y, get_gen_color(env, &var,RIGHT), w);
+
+                    draw_pixel(var.x, var.y, get_gen_color(env, &var, LEFT), w);
                     var.y++;
                 }
-                draw_pixel(var.x, var.y, get_left_color(env, &var), w);
+                draw_pixel(var.x, var.y, get_gen_color(env, &var, LEFT), w);
             }
             var.x1++;
             var.x = var.marx + var.x1 * var.len;
