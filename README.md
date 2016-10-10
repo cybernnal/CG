@@ -21,9 +21,11 @@ git push -u origin my_branch_name
 
 - [ ] add mouse control
 
-- [ ] graphics++
-
 - [ ] add A.I.
+
+- [ ] dockerize it and make a swarm cluster
+
+- [ ] graphics++
 
 - [ ] add more option, color, player...
 
@@ -32,7 +34,5 @@ git push -u origin my_branch_name
 - [ ] code optimization
 
 - [ ] add a exit func
-
-- [ ] dockerize it and make a swarm cluster
 
 - [ ] have fun
