@@ -55,7 +55,6 @@ typedef struct      s_window
 	int             step_y;
 }                   t_window;
 
-
 typedef struct      s_pars
 {
     int             x;
