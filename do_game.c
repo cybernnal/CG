@@ -65,6 +65,7 @@ static void  pars_n_play(t_env *env)
         {
             print_map(env->map, env->size);
             ft_putendl("gg you earn a point, please replay");
+            render(env);
             is_good = 0;
             env->ret = 0;
         }
