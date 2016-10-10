@@ -19,7 +19,7 @@ git push -u origin my_branch_name
 
 - [ ] fix not responding when waiting input
 
-- [ ] fix graphics + check all games
+- [x] fix graphics + check all games
 
 - [ ] add mouse control
 
