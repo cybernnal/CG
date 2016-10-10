@@ -29,10 +29,12 @@ git push -u origin my_branch_name
 
 - [ ] add more option, color, player...
 
+- [ ] fix compile.sh sdl flags
+
 - [ ] clean code
 
 - [ ] code optimization
 
-- [ ] add a exit func
+- [x] add a exit fun
 
 - [ ] have fun
