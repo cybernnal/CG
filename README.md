@@ -1,7 +1,9 @@
 CG (A Little Game)
 ============================
 # **USAGE:**
-``` cmake .```
+` cmake . 
+  make
+  ./colleen_game 'map_size' `
 
 #### **If you want to fix something create a new branch for push !!!!**
 
