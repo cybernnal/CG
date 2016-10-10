@@ -30,72 +30,6 @@ static void     init_var(t_trace *var, t_env *env)
     var->y1 = 0;
     var->ll = 0;
 }
-/*
-static Uint32   get_color(t_env *env, t_trace *var)
-{
-    if (var->y1 >= env->size || var->x1 >= env->size)
-        return (WHITE);
-    if (env->map[var->y1][var->x1] & P_ONE_SET)
-        return (GREEN);
-    else if (env->map[var->y1][var->x1] & P_TWO_SET)
-        return (BLEU);
-    else if (var->y == WIN_HEIGHT - var->mary || var->ll == 1)
-        return (WHITE);
-    else if ((var->y - var->mary) % var->len == 0 || var->y == var->mary || var->y == WIN_HEIGHT - var->mary)
-    {
-        if (env->map[var->y1][var->x1] & TOP)
-            return (RED);
-        else
-            return (WHITE);
-    }
-    else
-    {
-        if (env->map[var->y1][var->x1] & LEFT)
-            return (RED);
-        else
-            return (WHITE);
-    }
-
-}
-
-static void     draw_it(t_env *env, t_window *w)
-{
-    static t_trace     var;
-
-    init_var(&var, env);
-    while (var.y <= WIN_HEIGHT - var.mary)
-    {
-        while (var.x <= WIN_WIDTH - var.marx)
-        {
-            draw_pixel(var.x, var.y, get_color(env, &var), w);
-            if ((var.y - var.mary) % var.len == 0 || var.y == var.mary || var.y == WIN_HEIGHT - var.mary || P_SET(env->map[var.y1][var.x1]))
-            {
-                var.x++;
-                if ((var.x - var.marx) % var.len == 0 && var.x1 < 8)
-                    var.x1++;
-            }
-            else
-            {
-                var.x += var.len;
-                if (var.x1 < 8)
-                    var.x1++;
-            }
-        }
-        var.x1 = 0;
-        var.y++;
-        if ((var.y - var.mary) % var.len == 0)
-        {
-            if (var.y1 != 8)
-                var.y1++;
- //           else if (var.ll == 1)
-   //             return;
-            else
-                var.ll = 1;
-        }
-        var.x = var.marx;
-    }
-}
-*/
 
 static Uint32   get_top_color(t_env *env, t_trace *var) // clean useless if()
 {
@@ -148,11 +82,12 @@ static void     draw_map(t_env *env, t_window *w)
             var.x1++;
             var.x = var.marx + var.x1 * var.len;
             var.y = var.mary + var.y1 * var.len;
+            printf("y1: %d\n", var.y1);
         }
         var.x1 = 0;
         var.y1++;
         var.x = var.marx;
-        var.y++;
+        var.y = var.mary + var.y1 * var.len;
     }
 }
 
