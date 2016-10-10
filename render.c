@@ -48,6 +48,8 @@ static void     init_var(t_trace *var, t_env *env)
 
 static Uint32   get_color(t_env *env, t_trace *var)
 {
+    if (var->y1 >= env->size || var->x1 >= env->size)
+        return (WHITE);
     if (env->map[var->y1][var->x1] & P_ONE_SET)
         return (GREEN);
     else if (env->map[var->y1][var->x1] & P_TWO_SET)
@@ -84,13 +86,14 @@ static void     draw_it(t_env *env, t_window *w)
             if ((var.y - var.mary) % var.len == 0 || var.y == var.mary || var.y == WIN_HEIGHT - var.mary || P_SET(env->map[var.y1][var.x1]))
             {
                 var.x++;
-                if ((var.x - var.marx) % var.len == 0 && var.x1 != 8)
+                if ((var.x - var.marx) % var.len == 0 && var.x1 < 8)
                     var.x1++;
             }
             else
             {
                 var.x += var.len;
-                var.x1++;
+                if (var.x1 < 8)
+                    var.x1++;
             }
         }
         var.x1 = 0;
@@ -99,8 +102,8 @@ static void     draw_it(t_env *env, t_window *w)
         {
             if (var.y1 != 8)
                 var.y1++;
-            else if (var.ll == 1)
-                return;
+ //           else if (var.ll == 1)
+   //             return;
             else
                 var.ll = 1;
         }
