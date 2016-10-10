@@ -35,3 +35,4 @@
 *.su
 .idea
 Supprimerait .gitignore
+/col_game
