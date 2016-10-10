@@ -15,7 +15,7 @@ litle game
 
 ### TODO fix graphique + check all game
 
-##### TODO add mouse
+#### TODO add mouse
 
 ##### TODO graphique ++
 
