@@ -11,7 +11,6 @@ static void key_handler(SDL_Event event)
 	}
 }
 
-
 static void draw_pixel(int x, int y, Uint32 color, t_window *w)
 {
 	w->img_ptr[WIN_WIDTH * y + x] = color;
@@ -21,7 +20,7 @@ static void     init_var(t_trace *var, t_env *env)
 {
     if (!var->len)
     {
-        var->len = (WIN_HEIGHT - MAR * 2) / env->size;
+        var->len = ((WIN_HEIGHT - MAR * 2)) / env->size;
         var->marx = (WIN_WIDTH - (var->len * env->size)) / 2;
         var->mary = (WIN_HEIGHT - (var->len * env->size)) / 2;
     }
@@ -31,7 +30,7 @@ static void     init_var(t_trace *var, t_env *env)
     var->y1 = 0;
     var->ll = 0;
 }
-
+/*
 static Uint32   get_color(t_env *env, t_trace *var)
 {
     if (var->y1 >= env->size || var->x1 >= env->size)
@@ -96,6 +95,66 @@ static void     draw_it(t_env *env, t_window *w)
         var.x = var.marx;
     }
 }
+*/
+
+static Uint32   get_top_color(t_env *env, t_trace *var) // clean useless if()
+{
+   if (env->map[var->y1][var->x1] & P_ONE_SET || (var->y1 > 0 && env->map[var->y1 - 1][var->x1] & P_ONE_SET))
+        return (GREEN);
+    else if (env->map[var->y1][var->x1] & P_TWO_SET || (var->y1 > 0 && env->map[var->y1 - 1][var->x1] & P_TWO_SET))
+        return (BLEU);
+    else if (env->map[var->y1][var->x1] & TOP)
+        return (RED);
+    else
+        return (WHITE);
+}
+
+static Uint32   get_left_color(t_env *env, t_trace *var) // clean useless if()
+{
+    if (env->map[var->y1][var->x1] & P_ONE_SET || (var->x1 > 0 && env->map[var->y1][var->x1 - 1] & P_ONE_SET))
+        return (GREEN);
+    else if (env->map[var->y1][var->x1] & P_TWO_SET || (var->x1 > 0 && env->map[var->y1][var->x1 - 1] & P_TWO_SET))
+        return (BLEU);
+    else if (env->map[var->y1][var->x1] & LEFT)
+        return (RED);
+    else
+        return (WHITE);
+}
+
+static void     draw_map(t_env *env, t_window *w)
+{
+    static t_trace      var;
+
+     init_var(&var, env);
+    while (var.y1 < env->size)
+    {
+        while (var.x1 < env->size)
+        {
+            while ((var.x + 1 - var.marx) % var.len != 0)
+            {
+             //   if (var.x1 == 0 && var.y1 == 8) //case non afficher enlever com pour debug
+               //     printf("\n\n\nblanc: %d  color: %d\n\n\n",WHITE, get_color(env, &var));//je comprend pas ca affiche pas la case en bas a gauche
+                draw_pixel(var.x, var.y, get_top_color(env, &var), w);
+                var.x++;
+            }
+            draw_pixel(var.x, var.y, get_top_color(env, &var), w);
+            var.x = var.marx + var.x1 * var.len;
+            while ((var.y + 1 - var.mary) % var.len != 0)
+            {
+                draw_pixel(var.x, var.y, get_left_color(env, &var), w);
+                var.y++;
+            }
+            draw_pixel(var.x, var.y, get_left_color(env, &var), w);
+            var.x1++;
+            var.x = var.marx + var.x1 * var.len;
+            var.y = var.mary + var.y1 * var.len;
+        }
+        var.x1 = 0;
+        var.y1++;
+        var.x = var.marx;
+        var.y++;
+    }
+}
 
 void        render(t_env *env)
 {
@@ -107,7 +166,7 @@ void        render(t_env *env)
 		w.is_init = 1;
 	}
 	bzero(w.img_ptr, sizeof(Uint32) * WIN_HEIGHT * WIN_WIDTH);
-	draw_it(env, &w);
+	draw_map(env, &w);
 	while (SDL_PollEvent(&w.event))
 		key_handler(w.event);
 	SDL_UpdateTexture(w.image, NULL, w.img_ptr, WIN_WIDTH * sizeof(Uint32));
