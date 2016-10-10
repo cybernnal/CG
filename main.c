@@ -1,5 +1,32 @@
 #include "cg.h"
 
+static t_env        *sig(t_env *env, int i)
+{
+    static t_env *save;
+
+    if (i == 1)
+        save = env;
+    return (save);
+}
+
+static void                at_exit(void)
+{
+    t_env   *env;
+    int     i;
+    char    buf[2];
+
+    ft_bzero(buf, 2);
+    env = sig(NULL, 0);
+    i = 0;
+
+    while (i < env->size)
+    {
+        ft_memdel((void**)&env->map[i]);
+        i++;
+    }
+    ft_memdel((void**)&env->map);
+    printf("\nGame process terminated, score: Player 1: %d, Player 2: %d\n", env->p1, env->p2);
+}
 
 int	main(int argc, char **argv)
 {
@@ -7,7 +34,10 @@ int	main(int argc, char **argv)
 
     if (argc == 1)
         ft_error("not enough argument, map size needed");
+    atexit(at_exit);
 	ft_bzero(&env, sizeof(t_env));
+    sig(&env, 1);
+
     env.size = ft_atoi(argv[1]);
 	creat_map(&env);
     do_game(&env);
