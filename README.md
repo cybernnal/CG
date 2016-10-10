@@ -9,26 +9,24 @@ litle game
 
 ===========================
 
-### important / priority:
+## important / priority:
 
-#### TODO fix linux / (mac?) error not responding when waiting input
+### TODO fix linux / (mac?) error not responding when waiting input
 
-#### TODO fix graphique + check all game
+### TODO fix graphique + check all game
 
 ##### TODO add mouse
 
-###### TODO graphique ++
+##### TODO graphique ++
 
-###### TODO add bot player
+##### TODO add bot player
 
-###### TODO add more option, color, player...
+##### TODO add more option, color, player...
 
-TODO clean code
+##### TODO clean code
 
-TODO opti code
+##### TODO opti code
 
-TODO leaks
+##### TODO add at exit funct()
 
-TODO have fun
-
-TODO add at exit funct()
+##### TODO have fun
