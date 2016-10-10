@@ -55,6 +55,32 @@ static Uint32   get_left_color(t_env *env, t_trace *var) // clean useless if()
         return (WHITE);
 }
 
+static void     draw_squar(t_window *w, t_trace *var, int pos)
+{
+    Uint32  color;
+
+    if (pos & P_TWO_SET)
+        color = BLEU;
+    else
+        color = GREEN;
+    while ((var->y + 1 - var->mary) % var->len != 0)
+    {
+        while ((var->x + 1 - var->marx) % var->len != 0)
+        {
+            draw_pixel(var->x, var->y, color, w);
+            var->x++;
+        }
+        draw_pixel(var->x, var->y, color, w);
+        var->x = var->marx + var->x1 * var->len;
+        var->y++;
+    }
+    while ((var->x + 1 - var->marx) % var->len != 0)
+    {
+        draw_pixel(var->x, var->y, color, w);
+        var->x++;
+    }
+}
+
 static void     draw_map(t_env *env, t_window *w)
 {
     static t_trace      var;
@@ -64,19 +90,24 @@ static void     draw_map(t_env *env, t_window *w)
     {
         while (var.x1 < env->size)
         {
-            while ((var.x + 1 - var.marx) % var.len != 0)
+            if (P_SET(env->map[var.y1][var.x1]))
+                draw_squar(w, &var, env->map[var.y1][var.x1]);
+            else
             {
+                while ((var.x + 1 - var.marx) % var.len != 0)
+                {
+                    draw_pixel(var.x, var.y, get_top_color(env, &var), w);
+                    var.x++;
+                }
                 draw_pixel(var.x, var.y, get_top_color(env, &var), w);
-                var.x++;
-            }
-            draw_pixel(var.x, var.y, get_top_color(env, &var), w);
-            var.x = var.marx + var.x1 * var.len;
-            while ((var.y + 1 - var.mary) % var.len != 0)
-            {
+                var.x = var.marx + var.x1 * var.len;
+                while ((var.y + 1 - var.mary) % var.len != 0)
+                {
+                    draw_pixel(var.x, var.y, get_left_color(env, &var), w);
+                    var.y++;
+                }
                 draw_pixel(var.x, var.y, get_left_color(env, &var), w);
-                var.y++;
             }
-            draw_pixel(var.x, var.y, get_left_color(env, &var), w);
             var.x1++;
             var.x = var.marx + var.x1 * var.len;
             var.y = var.mary + var.y1 * var.len;
