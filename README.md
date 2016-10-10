@@ -1,32 +1,38 @@
-# CG
-litle game
+CG (A Little Game)
+============================
 
-## if you whant to fix some thinks creat a new branch for push !!!!
-### for that:
-#### git checkout -b "name of branch"
-#### git add / commit
-#### git push -u origin "name of branch"
+#### **If you want to fix something create a new branch for push !!!!**
 
-===========================
+For do that:
+```
+git checkout -b my_branch_name
+git add something
+git commit -m "<3 golang and docker"
+git push -u origin my_branch_name
+```
 
-## important / priority:
+## TODO-list sort by priority:
 
-### TODO fix linux / (mac?) error not responding when waiting input
+- [x] fix typo
 
-### TODO fix graphique + check all game
+- [ ] dockerize it and make a swarm cluster
 
-#### TODO add mouse
+- [ ] fix not responding when waiting input
 
-##### TODO graphique ++
+- [ ] fix graphics + check all games
 
-##### TODO add bot player
+- [ ] add mouse control
 
-##### TODO add more option, color, player...
+- [ ] graphics++
 
-##### TODO clean code
+- [ ] add A.I.
 
-##### TODO opti code
+- [ ] add more option, color, player...
 
-##### TODO add at exit funct()
+- [ ] clean code
 
-##### TODO have fun
+- [ ] code optimization
+
+- [ ] add a exit func
+
+- [ ] have fun
