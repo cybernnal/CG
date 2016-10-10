@@ -23,6 +23,8 @@ git push -u origin my_branch_name
 
 - [ ] add A.I.
 
+- [ ] fix render map size
+
 - [ ] dockerize it and make a swarm cluster
 
 - [ ] graphics++
