@@ -1,7 +1,6 @@
 #ifndef CG_H
 # define CG_H
 
-//#include <sdl2.h>
 #include "SDL2/SDL.h"
 #include "libft.h"
 
@@ -21,8 +20,6 @@
 #define P_ONE_SET 0x00000040
 #define P_TWO_SET 0x00000080
 #define P_SET(x)  (x & P_TWO_SET || x & P_ONE_SET) ? 1 : 0
-#define SET       0 | TOP | BOT | LEFT | RIGHT
-
 
 #define WHITE   (Uint32) ((255 << 16) + (255 << 8) + 255)
 #define RED     (Uint32) ((255 << 16) + (0 << 8) + 0)
@@ -36,8 +33,6 @@ typedef struct      s_trace
     int y;
     int x1;
     int y1;
-    int x0;
-    int y0;
     int marx;
     int mary;
     int ll;
@@ -51,8 +46,6 @@ typedef struct      s_window
 	SDL_Texture     *image;
 	Uint32          *img_ptr;
 	int             is_init;
-	int             step_x;
-	int             step_y;
 }                   t_window;
 
 typedef struct      s_pars

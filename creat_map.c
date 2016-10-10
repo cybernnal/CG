@@ -1,5 +1,4 @@
 #include "cg.h"
-#include <stdio.h>
 
 static int 	mal_map(t_env *env)
 {

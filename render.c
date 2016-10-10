@@ -17,18 +17,6 @@ static void draw_pixel(int x, int y, Uint32 color, t_window *w)
 	w->img_ptr[WIN_WIDTH * y + x] = color;
 }
 
-static Uint32   get_rainbow_color( int i)
-{ 
-	int r, g, b;
-	const float frequency = 0.01f;
-	const int	n = WIN_HEIGHT / ( i + 0.0001f);
-
-	r = ( int)( sinf( frequency * i + 0) * 127 + 128);
-	g = ( int)( sinf( frequency * i + 2) * 127 + 128);
-	b = ( int)( sinf( frequency * i + 4) * 127 + 128);
-	return ( ( Uint32 )( ( r << 16) + ( g << 8) + b));
-}
-
 static void     init_var(t_trace *var, t_env *env)
 {
     if (!var->len)
@@ -42,8 +30,6 @@ static void     init_var(t_trace *var, t_env *env)
     var->x1 = 0;
     var->y1 = 0;
     var->ll = 0;
-    var->x0 = var->x;
-    var->y0 = var->y;
 }
 
 static Uint32   get_color(t_env *env, t_trace *var)
@@ -109,36 +95,6 @@ static void     draw_it(t_env *env, t_window *w)
         }
         var.x = var.marx;
     }
-}
-
-static void		draw_map(t_env *env, t_window *w)
-{
-	int x;
-	int xmar;
-	int y;
-	int len;
-
-	len = (WIN_HEIGHT - MAR * 2) / env->size;
-    y = MAR;
-	xmar = ((WIN_WIDTH - MAR * 2) % len);
-	if (xmar < MAR)
-		xmar += len;
-	x = xmar;
-	while (y <= WIN_HEIGHT - MAR)
-	{
-		while (x <= WIN_WIDTH - xmar)
-		{
-            if ((y - MAR) % len == 0 && (x - MAR) / len )
-			draw_pixel(x, y, BLEU, w);
-			if ((y - MAR) % len == 0 || y == MAR || y == WIN_HEIGHT - MAR)
-				x++;
-			else
-				x += len;
-		}
-		draw_pixel(WIN_WIDTH - xmar, y, BLEU, w);//resolv probleme to remove dat
-		y++;
-		x = xmar;
-	}
 }
 
 void        render(t_env *env)

@@ -32,7 +32,7 @@ static int   ft_pars(char *buf, t_pars *pars)
     ft_bzero(nb, 11);
     while (ft_isdigit(buf[i]))
         nb[j++] = buf[i++];
-    if (j < 1)// || buf[i++])
+    if (j < 1)
         return (0);
     pars->pos = ft_atoi(nb);
     return (1);
