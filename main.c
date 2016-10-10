@@ -18,14 +18,16 @@ static void                at_exit(void)
     ft_bzero(buf, 2);
     env = sig(NULL, 0);
     i = 0;
-
+    render(env);
     while (i < env->size)
     {
         ft_memdel((void**)&env->map[i]);
         i++;
     }
     ft_memdel((void**)&env->map);
-    printf("\nGame process terminated, score: Player 1: %d, Player 2: %d\n", env->p1, env->p2);
+    printf("\nGame process terminated, score: Player 1: %d, Player 2: %d\n GG Player %d you win", env->p1, env->p2, env->p1 > env->p2 ? 1 : 2);
+    if (env->p1 + env->p2 >= ((env->size + 1) * (env->size / 2) + 1))
+        sleep(10);
 }
 
 int	main(int argc, char **argv)
