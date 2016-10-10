@@ -15,8 +15,6 @@ git push -u origin my_branch_name
 
 - [x] fix typo
 
-- [ ] dockerize it and make a swarm cluster
-
 - [ ] fix not responding when waiting input
 
 - [ ] fix graphics + check all games
@@ -34,5 +32,7 @@ git push -u origin my_branch_name
 - [ ] code optimization
 
 - [ ] add a exit func
+
+- [ ] dockerize it and make a swarm cluster
 
 - [ ] have fun
