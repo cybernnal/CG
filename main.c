@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	t_env env;
 
     if (argc == 1)
-        ft_error("not enough argument, map size needed");
+        ft_error("not enough or too many argument, map size needed");
     atexit(at_exit);
 	ft_bzero(&env, sizeof(t_env));
     sig(&env, 1);
