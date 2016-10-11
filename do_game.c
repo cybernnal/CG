@@ -1,3 +1,4 @@
+#include <sys/termios.h>
 #include "cg.h"
 
 /*
@@ -32,10 +33,22 @@ static int   ft_pars(char *buf, t_pars *pars)
     ft_bzero(nb, 11);
     while (ft_isdigit(buf[i]))
         nb[j++] = buf[i++];
-    if (j < 1)
+    if (j  < 1)
         return (0);
     pars->pos = ft_atoi(nb);
     return (1);
+}
+
+static int kbhit()
+{
+    struct timeval tv;
+    fd_set fds;
+    tv.tv_sec = 0;
+    tv.tv_usec = 0;
+    FD_ZERO(&fds);
+    FD_SET(STDIN_FILENO, &fds); //STDIN_FILENO is 0
+    select(STDIN_FILENO+1, &fds, NULL, NULL, &tv);
+    return FD_ISSET(STDIN_FILENO, &fds);
 }
 
 static void  pars_n_play(t_env *env)
@@ -43,19 +56,26 @@ static void  pars_n_play(t_env *env)
     char    buf[128];
     int     is_good;
     t_pars  pars;
+    int        i;
 
     is_good = 0;
     while (!is_good)
     {
         ft_putendl(USAGE);
-        ft_bzero(buf, 128);
         ft_bzero(&pars, sizeof(t_pars));
-        read(1, buf, 127);
-        if (!ft_strcmp(buf, "quit\n"))
+        i = 0;
+        while (i == 0)
+        {
+            render(env);
+            i = kbhit();
+            if (i != 0)
+                read(1, pars.buf, 127);
+        }
+        if (!ft_strcmp(pars.buf, "quit\n"))
             exit (0);
-        if (ft_strlen(buf) >= 126)
+        if (ft_strlen(pars.buf) >= 126)
             ft_error("Game Over, input fatal error: EXIT");
-        if ((ft_pars(buf, &pars)) == 0)
+        if ((ft_pars(pars.buf, &pars)) == 0)
         {
             ft_putendl("input error, try again");
             continue;

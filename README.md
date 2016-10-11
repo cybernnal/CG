@@ -17,7 +17,7 @@ git push -u origin my_branch_name
 
 - [x] fix typo
 
-- [ ] fix not responding when waiting input
+- [x] fix not responding when waiting input
 
 - [x] fix graphics + check all games
 

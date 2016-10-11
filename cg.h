@@ -1,7 +1,7 @@
 #ifndef CG_H
 # define CG_H
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "libft.h"
 
 #define WIN_WIDTH   1200
@@ -35,8 +35,7 @@ typedef struct      s_trace
     int y1;
     int marx;
     int mary;
-    int ll;
-}                   t_trace;
+   }                   t_trace;
 
 typedef struct      s_window
 { 
@@ -53,6 +52,7 @@ typedef struct      s_pars
     int             x;
     int             y;
     int             pos;
+    char            buf[128];
 }                   t_pars;
 
 typedef struct      s_env
