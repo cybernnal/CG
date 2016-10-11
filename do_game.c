@@ -51,9 +51,24 @@ static int kbhit()
     return FD_ISSET(STDIN_FILENO, &fds);
 }
 
+static int      mouse_hit(t_pars *pars)
+{
+    int x;
+    int y;
+
+    x = 0;
+    y = 0;
+    if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT))
+    {
+        SDL_Log("Mouse Button 1 (left) is pressed. %d %d\n", x, y);
+        return (1); // replsace to 42
+    }
+    return (0);
+}
+
+
 static void  pars_n_play(t_env *env)
 {
-    char    buf[128];
     int     is_good;
     t_pars  pars;
     int        i;
@@ -70,15 +85,19 @@ static void  pars_n_play(t_env *env)
             i = kbhit();
             if (i != 0)
                 read(1, pars.buf, 127);
+            i = mouse_hit(&pars);
         }
-        if (!ft_strcmp(pars.buf, "quit\n"))
-            exit (0);
-        if (ft_strlen(pars.buf) >= 126)
-            ft_error("Game Over, input fatal error: EXIT");
-        if ((ft_pars(pars.buf, &pars)) == 0)
+        if (i != 42)
         {
-            ft_putendl("input error, try again");
-            continue;
+            if (!ft_strcmp(pars.buf, "quit\n"))
+                exit(0);
+            if (ft_strlen(pars.buf) >= 126)
+                ft_error("Game Over, input fatal error: EXIT");
+            if ((ft_pars(pars.buf, &pars)) == 0)
+            {
+                ft_putendl("input error, try again");
+                continue;
+            }
         }
         is_good = do_round(pars.x, pars.y, pars.pos, env);
         if (env->ret == 1)
