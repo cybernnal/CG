@@ -32,7 +32,6 @@ static void     init_var(t_trace *var, t_env *env)
     var->y = var->mary;
     var->x1 = 0;
     var->y1 = 0;
-    var->ll = 0;
 }
 
 static int   get_p1set_color(t_env *env, t_trace *var, unsigned int pos)
