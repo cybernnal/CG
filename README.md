@@ -1,7 +1,7 @@
 CG (A Little Game)
 ============================
 # **USAGE:**
-` cmake . ;  make ; ./colleen_game 'map_size' `
+` cmake . ;  make ; ./colleen_game 'map_size' ['1 = Player2 is an ai'] or  ['2 = 2 players are ai']`
 
 #### **If you want to fix something create a new branch for push !!!!**
 
@@ -21,9 +21,11 @@ git push -u origin my_branch_name
 
 - [x] fix graphics + check all games
 
-- [ ] add mouse control
+- [x] add mouse control
 
-- [ ] add A.I.
+- [x] add A.I.
+
+- [ ] optimize A.I.
 
 - [ ] fix render map size
 
