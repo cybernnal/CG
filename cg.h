@@ -51,6 +51,8 @@ typedef struct      s_pars
 {
     int             x;
     int             y;
+    float           xm;
+    float           ym;
     int             pos;
     char            buf[128];
 }                   t_pars;
