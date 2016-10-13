@@ -51,6 +51,20 @@ static int kbhit()
     return FD_ISSET(STDIN_FILENO, &fds);
 }
 
+static unsigned int     get_pos(float x, float y)
+{
+    if (y < 0.25 && x < 1 - y && x > y)
+        return (2);
+    else if (y > 1 - 0.25 && x > 1 - y && x < y)
+        return (1);
+    else if (x < 0.25 && y < 1 - x && y > x)
+        return (3);
+    else if (x > 1 - 0.25 && y > 1 - x && y < x)
+        return (4);
+    else
+        return (0);
+}
+
 static void     get_mouse_coor(int x, int y, t_pars *pars, t_env *env)
 {
     static int len = 0;
@@ -67,9 +81,11 @@ static void     get_mouse_coor(int x, int y, t_pars *pars, t_env *env)
     }
     pars->xm = (float)(x - marx) / len;
     pars->ym = (float)(y - mary) / len;
-    xx = (int)pars->xm * len;
-    yy = (int)pars->ym * len;`
-    printf("xm: %f, ym: %f, pos: %d, x: %f, y: %f\n", pars->xm, pars->ym, pars->pos, xx, yy);
+    xx = pars->xm - (int)pars->xm;
+    yy = pars->ym - (int)pars->ym;
+    pars->x = (int)pars->xm;
+    pars->y = (int)pars->ym;
+    pars->pos = get_pos(xx, yy);
 }
 
 static int      mouse_hit(t_pars *pars, t_env *env)
@@ -81,11 +97,9 @@ static int      mouse_hit(t_pars *pars, t_env *env)
     y = 0;
     if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT))
     {
-        SDL_Log("Mouse Button 1 (left) is pressed. %d %d\n", x, y);
-        //sleep(1);
         get_mouse_coor(x, y, pars, env);
-        usleep(200000);
-        return (1); // replace to 42
+        usleep(100000);
+        return (42);
     }
     return (0);
 }
