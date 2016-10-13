@@ -51,7 +51,12 @@ static int kbhit()
     return FD_ISSET(STDIN_FILENO, &fds);
 }
 
-static int      mouse_hit(t_pars *pars)
+static void     get_mouse_coor(int x, int y, t_pars *pars)
+{
+
+}
+
+static int      mouse_hit(t_pars *pars, t_env *env)
 {
     int x;
     int y;
@@ -61,6 +66,9 @@ static int      mouse_hit(t_pars *pars)
     if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT))
     {
         SDL_Log("Mouse Button 1 (left) is pressed. %d %d\n", x, y);
+        //sleep(1);
+        get_mouse_coor(x, y, pars, env);
+        usleep(200000);
         return (1); // replsace to 42
     }
     return (0);
@@ -85,7 +93,7 @@ static void  pars_n_play(t_env *env)
             i = kbhit();
             if (i != 0)
                 read(1, pars.buf, 127);
-            i = mouse_hit(&pars);
+            i = mouse_hit(&pars, env);
         }
         if (i != 42)
         {
