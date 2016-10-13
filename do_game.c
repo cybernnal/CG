@@ -46,14 +46,30 @@ static int kbhit()
     tv.tv_sec = 0;
     tv.tv_usec = 0;
     FD_ZERO(&fds);
-    FD_SET(STDIN_FILENO, &fds); //STDIN_FILENO is 0
+    FD_SET(STDIN_FILENO, &fds);
     select(STDIN_FILENO+1, &fds, NULL, NULL, &tv);
     return FD_ISSET(STDIN_FILENO, &fds);
 }
 
-static void     get_mouse_coor(int x, int y, t_pars *pars)
+static void     get_mouse_coor(int x, int y, t_pars *pars, t_env *env)
 {
+    static int len = 0;
+    static int marx;
+    static int mary;
+    float       xx;
+    float       yy;
 
+    if (!len)
+    {
+        len = ((WIN_HEIGHT - MAR * 2)) / env->size;
+        marx = (WIN_WIDTH - (len * env->size)) / 2;
+        mary = (WIN_HEIGHT - (len * env->size)) / 2;
+    }
+    pars->xm = (float)(x - marx) / len;
+    pars->ym = (float)(y - mary) / len;
+    xx = (int)pars->xm * len;
+    yy = (int)pars->ym * len;`
+    printf("xm: %f, ym: %f, pos: %d, x: %f, y: %f\n", pars->xm, pars->ym, pars->pos, xx, yy);
 }
 
 static int      mouse_hit(t_pars *pars, t_env *env)
@@ -69,7 +85,7 @@ static int      mouse_hit(t_pars *pars, t_env *env)
         //sleep(1);
         get_mouse_coor(x, y, pars, env);
         usleep(200000);
-        return (1); // replsace to 42
+        return (1); // replace to 42
     }
     return (0);
 }
@@ -93,7 +109,8 @@ static void  pars_n_play(t_env *env)
             i = kbhit();
             if (i != 0)
                 read(1, pars.buf, 127);
-            i = mouse_hit(&pars, env);
+            if (i == 0)
+                i = mouse_hit(&pars, env);
         }
         if (i != 42)
         {
