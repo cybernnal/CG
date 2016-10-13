@@ -35,6 +35,7 @@ typedef struct      s_trace
     int y1;
     int marx;
     int mary;
+    int p;
    }                   t_trace;
 
 typedef struct      s_window
@@ -65,7 +66,17 @@ typedef struct      s_env
     int             p;
     int             p1;
     int             p2;
+    int             ia;
 }                   t_env;
+
+typedef struct      s_ia
+{
+    unsigned int    p_3_1;
+    unsigned int    p_3_2;
+    unsigned int    p_3_3;
+    unsigned int    p_3_4;
+    unsigned int    last;
+}                   t_ia;
 
 void	render(t_env *env);
 void	init_window(t_window *window);
@@ -76,5 +87,6 @@ int    do_round(int x, int y, int p, t_env *env);
 int     do_game(t_env * env);
 void        print_map(int **map, int size);
 void     put_masque(int x, int y, unsigned int pos, t_env *env);
+int      ft_ia(t_env *env, t_pars *pars);
 
 #endif

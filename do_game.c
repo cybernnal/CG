@@ -104,7 +104,6 @@ static int      mouse_hit(t_pars *pars, t_env *env)
     return (0);
 }
 
-
 static void  pars_n_play(t_env *env)
 {
     int     is_good;
@@ -117,6 +116,8 @@ static void  pars_n_play(t_env *env)
         ft_putendl(USAGE);
         ft_bzero(&pars, sizeof(t_pars));
         i = 0;
+        if ((env->ia == 1 && env->p == -1) || (env->ia == 2))
+            i = ft_ia(env, &pars);
         while (i == 0)
         {
             render(env);
@@ -155,7 +156,6 @@ static void  pars_n_play(t_env *env)
 
 int     do_game(t_env * env)
 {
-
     env->p = 1;
     while (env->p1 + env->p2 < ((env->size + 1) * (env->size / 2) + 1))
     {

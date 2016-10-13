@@ -28,6 +28,7 @@ static void     init_var(t_trace *var, t_env *env)
         var->marx = (WIN_WIDTH - (var->len * env->size)) / 2;
         var->mary = (WIN_HEIGHT - (var->len * env->size)) / 2;
     }
+    var->p = env->p;
     var->x = var->marx;
     var->y = var->mary;
     var->x1 = 0;
