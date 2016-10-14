@@ -27,8 +27,7 @@ static void                at_exit(void)
     ft_memdel((void**)&env->map);
     printf("\nGame process terminated, score: Player 1: %d, Player 2: %d\n GG Player %d you win", env->p1, env->p2, env->p1 > env->p2 ? 1 : 2);
     if (env->p1 + env->p2 >= ((env->size + 1) * (env->size / 2) + 1))
-        while (env->size)
-            render(env);
+        sleep(10);
 }
 
 int	main(int argc, char **argv)
