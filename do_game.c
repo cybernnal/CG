@@ -142,7 +142,6 @@ static void  pars_n_play(t_env *env)
         is_good = do_round(pars.x, pars.y, pars.pos, env);
         if (env->ret == 1)
         {
-            ft_putnbr(env->size / 2);
             if (env->p1 + env->p2 >= ((env->size + 1) * (env->size / 2) + 1))
                 exit (1);
             print_map(env->map, env->size);

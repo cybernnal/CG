@@ -25,6 +25,10 @@
 #define RED     (Uint32) ((255 << 16) + (0 << 8) + 0)
 #define GREEN   (Uint32) ((0 << 16) + (255 << 8) + 0)
 #define BLEU    (Uint32) ((0 << 16) + (0 << 8) + 255)
+#define PURPUL  (Uint32) ((108 << 16) + (2 << 8) + 119)
+#define ORANGE  (Uint32) ((250 << 16) + (164 << 8) + 1)
+#define P1COLOR PURPUL
+#define P2COLOR ORANGE
 
 typedef struct      s_trace
 {

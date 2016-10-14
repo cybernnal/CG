@@ -75,9 +75,9 @@ static int   get_p2set_color(t_env *env, t_trace *var, unsigned int pos)
 static Uint32   get_gen_color(t_env *env, t_trace *var, unsigned int pos)
 {
     if (env->map[var->y1][var->x1] & P_ONE_SET || get_p1set_color(env, var, pos)) //(var->y1 > 0 && env->map[var->y1 - 1][var->x1] & P_ONE_SET))
-        return (GREEN);
+        return (P1COLOR);
     else if (env->map[var->y1][var->x1] & P_TWO_SET || get_p2set_color(env, var, pos))// || (var->y1 > 0 && env->map[var->y1 - 1][var->x1] & P_TWO_SET))
-        return (BLEU);
+        return (P2COLOR);
     else if (env->map[var->y1][var->x1] & pos)
         return (RED);
     else
@@ -89,9 +89,9 @@ static void     draw_squar(t_window *w, t_trace *var, int pos)
     Uint32  color;
 
     if (pos & P_TWO_SET)
-        color = BLEU;
+        color = P2COLOR;
     else
-        color = GREEN;
+        color = P1COLOR;
     while ((var->y + 1 - var->mary) % var->len != 0)
     {
         while ((var->x + 1 - var->marx) % var->len != 0)
@@ -108,6 +108,7 @@ static void     draw_squar(t_window *w, t_trace *var, int pos)
         draw_pixel(var->x, var->y, color, w);
         var->x++;
     }
+    draw_pixel(var->x, var->y, color, w);
     var->x = var->marx + var->x1 * var->len;
     var->y = var->mary + var->y1 * var->len;
 }
@@ -143,7 +144,6 @@ static void     draw_map(t_env *env, t_window *w)
                     var.y++;
                 }
                 draw_pixel(var.x, var.y, get_gen_color(env, &var, LEFT), w);
-
             }
             var.x1++;
             var.x = var.marx + var.x1 * var.len;
