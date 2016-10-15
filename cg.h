@@ -75,11 +75,8 @@ typedef struct      s_env
 
 typedef struct      s_ia
 {
-    unsigned int    p_3_1;
-    unsigned int    p_3_2;
-    unsigned int    p_3_3;
-    unsigned int    p_3_4;
-    unsigned int    last;
+    int             x0;
+    int             y0;
 }                   t_ia;
 
 void	render(t_env *env);
