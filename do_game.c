@@ -127,7 +127,7 @@ static void  pars_n_play(t_env *env)
             if (i == 0)
                 i = mouse_hit(&pars, env);
         }
-        if (i != 42)
+        if (i < 42)
         {
             if (!ft_strcmp(pars.buf, "quit\n"))
                 exit(0);

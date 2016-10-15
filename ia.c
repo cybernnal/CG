@@ -12,6 +12,62 @@ static void     init_ia(t_ia *ia)
     ia->p_3_4 = 0 | TOP | BOT | RIGHT;
 }
 
+static int      is_ok_pos(int **map, int x, int y)
+{
+    if (!(map[y][x] & TOP) && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
+        return (1);
+    else if (!(map[y][x] & BOT) && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
+        return (2);
+    else if (!(map[y][x] & TOP) && !(map[y][x] & LEFT) && !(map[y][x] & BOT) && !P_SET(map[y][x]))
+        return (4);
+    else if (!(map[y][x] & TOP) && !(map[y][x] & BOT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
+        return (3);
+    else
+        return (0);
+}
+
+static int      is_th_pos(int **map, int x, int y)
+{
+    if (map[y][x] & USE_SET && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+    {
+        if (is_ok_pos(map, x, y - 1))
+            return (2);
+        if (is_ok_pos(map, x + 1, y))
+            return (4);
+        if (is_ok_pos(map, x - 1, y))
+            return (3);
+    }
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
+    {
+        if (is_ok_pos(map, x, y + 1))
+            return (1);
+        if (is_ok_pos(map, x + 1, y))
+            return (4);
+        if (is_ok_pos(map, x - 1, y))
+            return (3);
+    }
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+    {
+        if (is_ok_pos(map, x, y - 1))
+            return (2);
+        if (is_ok_pos(map, x, y + 1))
+            return (1);
+        if (is_ok_pos(map, x - 1, y))
+            return (3);
+    }
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+    {
+        if (is_ok_pos(map, x, y - 1))
+            return (2);
+        if (is_ok_pos(map, x + 1, y))
+            return (4);
+        if (is_ok_pos(map, x, y + 1))
+            return (1);
+    }
+    return (0);
+}
+
+
 static int      is_t_pos(int **map, int x, int y)
 {
     if (map[y][x] & TOP && map[y][x] & LEFT && map[y][x] & RIGHT && !P_SET(map[y][x]))
@@ -29,56 +85,59 @@ static int      is_t_pos(int **map, int x, int y)
 static int      is_z_pos(int **map, int x, int y)
 {
     if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
-        return (1);
-    else
-        return (0);
+        if (is_ok_pos(map, x, y + 1))
+            return (1);
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+        if (is_ok_pos(map, x, y - 1))
+            return (2);
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+        if (is_ok_pos(map, x - 1, y))
+            return (3);
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+        if (is_ok_pos(map, x + 1, y))
+            return (4);
+    return (0);
 }
 
 
 static int      is_tt_pos(int **map, int x, int y)
 {
     if (map[y][x] & USE_SET && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
-        return (3);
-    else if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !P_SET(map[y][x]))
-        return (1);
-    else if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
-        return (1);
-    else if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
-        return (1);
-    else if (map[y][x] & USE_SET && !(map[y][x] & LEFT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
-        return (2);
-    else if (map[y][x] & USE_SET && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
-        return (2);
-    else
-        return (0);
+        if (is_ok_pos(map, x + 1, y) && is_ok_pos(map, x - 1, y))
+            return (4);
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !P_SET(map[y][x]))
+        if (is_ok_pos(map, x, y + 1) && is_ok_pos(map, x - 1, y))
+            return (1);
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
+        if (is_ok_pos(map, x + 1, y) &&  is_ok_pos(map, x, y + 1))
+            return (4);
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+        if (is_ok_pos(map, x, y + 1) && is_ok_pos(map, x, y - 1))
+            return (1);
+    if (map[y][x] & USE_SET && !(map[y][x] & LEFT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+        if (is_ok_pos(map, x, y - 1) && is_ok_pos(map, x - 1, y))
+            return (2);
+    if (map[y][x] & USE_SET && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+        if (is_ok_pos(map, x + 1, y) && is_ok_pos(map, x, y - 1))
+            return (4);
+    return (0);
 }
 
-static int      is_o_pos(int **map, int x, int y)
+static int      is_ttt_pos(int **map, int x, int y)
 {
-    if (map[y][x] & USE_SET && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
+    if (map[y][x] & USE_SET && !(map[y][x] & LEFT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
         return (4);
-    else if (map[y][x] & USE_SET && !(map[y][x] & LEFT) && !P_SET(map[y][x]))
-        return (3);
-    else if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !P_SET(map[y][x]))
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & LEFT) && !P_SET(map[y][x]))
         return (1);
-    else if (map[y][x] & USE_SET && !(map[y][x] & TOP) && !P_SET(map[y][x]))
-        return (2);
-    else
-        return (0);
-}
-
-static int      is_ob_pos(int **map, int x, int y)
-{
-    if (map[y][x] & USE_SET && !(map[y][x] & RIGHT) && !P_SET(map[y][x]) && is_t_pos(map, x, y))
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & RIGHT) && !P_SET(map[y][x]))
         return (4);
-    else if (map[y][x] & USE_SET && !(map[y][x] & LEFT) && !P_SET(map[y][x]) && is_t_pos(map, x, y))
-        return (3);
-    else if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !P_SET(map[y][x]) && is_t_pos(map, x, y))
+    if (map[y][x] & USE_SET && !(map[y][x] & BOT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
         return (1);
-    else if (map[y][x] & USE_SET && !(map[y][x] & TOP) && !P_SET(map[y][x]) && is_t_pos(map, x, y))
+    if (map[y][x] & USE_SET && !(map[y][x] & LEFT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
         return (2);
-    else
-        return (0);
+    if (map[y][x] & USE_SET && !(map[y][x] & RIGHT) && !(map[y][x] & TOP) && !P_SET(map[y][x]))
+        return (4);
+    return (0);
 }
 
 static int      step_one(t_env * env, t_pars *pars, t_ia *ia)
@@ -149,7 +208,7 @@ static int      step_three(t_env * env, t_pars *pars, t_ia *ia)
     {
         while (x < env->size)
         {
-            if ((pars->pos = is_t_pos(env->map, x, y)))
+            if ((pars->pos = is_th_pos(env->map, x, y)))
                 break ;
             x++;
         }
@@ -205,7 +264,7 @@ static int      step_five(t_env * env, t_pars *pars, t_ia *ia)
     {
         while (x < env->size)
         {
-            if ((pars->pos = is_ob_pos(env->map, x, y)))
+            if ((pars->pos = is_ttt_pos(env->map, x, y)))
                 break ;
             x++;
         }
@@ -220,35 +279,6 @@ static int      step_five(t_env * env, t_pars *pars, t_ia *ia)
         return (0);
     return (1);
 }
-
-static int step_six(t_env *env, t_pars *pars)
-{
-    int x;
-    int y;
-
-    x = 0;
-    y = 0;
-    pars->pos = 0;
-    while(y < env->size)
-    {
-        while (x < env->size)
-        {
-            if ((pars->pos = is_o_pos(env->map, x, y)))
-                break ;
-            x++;
-        }
-        if (pars->pos != 0)
-            break;
-        y++;
-        x = 0;
-    }
-    pars->x = x;
-    pars->y = y;
-    if (y == env->size)
-        return (0);
-    return (1);
-}
-
 
 int      ft_ia(t_env *env, t_pars *pars)
 {
@@ -260,14 +290,12 @@ int      ft_ia(t_env *env, t_pars *pars)
     if (step_one(env, pars, &ia))
         return (42);
     if (last <= 2 && step_two(env, pars, &ia) && (last = 2))
-        return (42);
+        return (43);
     if (last <= 3 && step_three(env, pars, &ia) && (last = 3))
-        return (42);
+        return (44);
     if (last <= 4 && step_four(env, pars, &ia) && (last = 4))
-        return (42);
+        return (45);
     if (last <= 5 && step_five(env, pars, &ia) && (last = 5))
-        return (42);
-    if (last <= 6 && step_six(env, pars) && (last = 6))
-        return (42);
+        return (46);
     return (0);
 }
