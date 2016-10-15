@@ -1,5 +1,7 @@
 #include <sys/termios.h>
 #include "cg.h"
+#include <time.h>
+#include <stdlib.h>
 
 /*
  * dirty for no malloc
@@ -155,7 +157,8 @@ static void  pars_n_play(t_env *env)
 
 int     do_game(t_env * env)
 {
-    env->p = 1;
+    srand((unsigned int)time(NULL));
+    (((rand() % 2) == 1) ? (env->p = 1) : (env->p = -1));
     while (env->p1 + env->p2 < ((env->size + 1) * (env->size / 2) + 1))
     {
         render(env);
