@@ -1,11 +1,11 @@
 #ifndef CG_H
 # define CG_H
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "libft.h"
 
-#define WIN_WIDTH   1200
-#define WIN_HEIGHT  700
+#define WIN_WIDTH   2100
+#define WIN_HEIGHT  1100
 #define MAR         20
 
 #define USAGE "Usage: |x;y;p| x: x position, y: y position, p: 1 = bot ; 2 = top ; 3 = left ; 4 = right || 'quit' for exit game"

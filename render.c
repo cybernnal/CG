@@ -14,7 +14,7 @@ static void key_handler(SDL_Event event)
 static void draw_pixel(int x, int y, Uint32 color, t_window *w)
 {
 	w->img_ptr[WIN_WIDTH * y + x] = color;
-   // SDL_UpdateTexture(w->image, NULL, w->img_ptr, WIN_WIDTH * sizeof(Uint32));
+  //  SDL_UpdateTexture(w->image, NULL, w->img_ptr, WIN_WIDTH * sizeof(Uint32));
     //SDL_RenderCopy(w->renderer, w->image, NULL, NULL);
     //SDL_RenderPresent(w->renderer);
 
