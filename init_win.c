@@ -13,7 +13,7 @@ void        init_window(t_window *window)
 	if (!(window->window = SDL_CreateWindow("Colleen_game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 					WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN)))
 		exit(EXIT_FAILURE);
-	if (!(window->renderer = SDL_CreateRenderer(window->window, -1, SDL_RENDERER_ACCELERATED)))
+	if (!(window->renderer = SDL_CreateRenderer(window->window, - 1, SDL_RENDERER_ACCELERATED)))
 		exit(EXIT_FAILURE);
 	init_texture_renderer(window, WIN_WIDTH, WIN_HEIGHT);
 }
