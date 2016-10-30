@@ -43,4 +43,4 @@ git push -u origin my_branch_name
 
 - [x] add a exit fun
 
-- [ ] have fun
+- [x] have fun
